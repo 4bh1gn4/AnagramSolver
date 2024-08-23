@@ -17,7 +17,14 @@ public class Main extends Application {
         Label resultLabel = new Label();
         TextField textField = new TextField();
         
-        textField.setPromptText("Type the word here");
+        textField.setPrefWidth(200);  // Set preferred width
+        textField.setPrefHeight(30);  // Set preferred height
+        textField.setMaxWidth(200);   // Set maximum width
+        textField.setMaxHeight(30);   // Set maximum height
+        textField.setMinWidth(200);   // Set minimum width
+        textField.setMinHeight(30);   // Set minimum height
+        
+        //textField.setPromptText("Type the word here");
         textField.setStyle("-fx-prompt-text-fill: gray;");
 
         Button submitButton = new Button("Submit");
@@ -31,9 +38,7 @@ public class Main extends Application {
         		resultLabel.setText("Incorrect");
         	}
         });
-        Label welcomeLabel = new Label("Welcome to JavaFX!");
-        Button readyButton = new Button("Ready");
-
+        
         VBox layout = new VBox(10, temp, textField, submitButton, resultLabel);
         layout.setAlignment(javafx.geometry.Pos.CENTER);
 
