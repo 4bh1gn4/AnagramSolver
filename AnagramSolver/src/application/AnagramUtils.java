@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AnagramUtils {
-	private static final List<String> words = Arrays.asList("hello", "type", "stop", "phone");
+	private static final List<String> words = Arrays.asList("hello", "type", "stop", "phone", "short", "");
     
 	public static String getWord(int index) {
 		return words.get(index);

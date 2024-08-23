@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,7 +17,7 @@ public class Main extends Application {
 	private int wordIndex;
 	
 	@Override
-    public void start(Stage primaryStage) {
+public void start(Stage primaryStage) {
         primaryStage.setTitle("Anagram Solver");
         wordIndex = 0;
         correctWord = AnagramUtils.getRandomWord(wordIndex);
@@ -33,15 +34,19 @@ public class Main extends Application {
         textField.setMinWidth(200);   // Set minimum width
         textField.setMinHeight(30);   // Set minimum height
         
-        //textField.setPromptText("Type the word here");
+        textField.setPromptText("Type the word here");
         textField.setStyle("-fx-prompt-text-fill: gray;");
 
         Button submitButton = new Button("Submit");
+        
+        HBox input = new HBox(10, textField, submitButton);
+        input.setAlignment(javafx.geometry.Pos.CENTER);
+        
         Button nextButton = new Button("Next");
         nextButton.setVisible(false);
         
         submitButton.setOnAction(event -> {
-        	System.out.println(textField.getPromptText());
+        	//System.out.println(textField.getPromptText());
         	String userInput = textField.getText();
         	if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
         		resultLabel.setText("Correct");
@@ -71,7 +76,7 @@ public class Main extends Application {
         	}
         });
         
-        VBox layout = new VBox(10, prompt, textField, submitButton, resultLabel, nextButton);
+        VBox layout = new VBox(10, prompt, input, resultLabel, nextButton);
         layout.setAlignment(javafx.geometry.Pos.CENTER);
 
         Scene scene = new Scene(layout, 600, 400);
