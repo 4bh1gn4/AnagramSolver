@@ -16,9 +16,23 @@ public class Main extends Application {
 	private String jumbledWord;
 	private int wordIndex;
 	
-	@Override
+@Override
 public void start(Stage primaryStage) {
-        primaryStage.setTitle("Anagram Solver");
+	primaryStage.setTitle("Anagram Solver");
+	
+	Scene welcomeScene = welcomeScene(primaryStage);
+	Scene gameScene = gameScene(primaryStage);
+	
+	primaryStage.setScene(welcomeScene);
+	primaryStage.show();
+}
+
+public Scene welcomeScene(Stage primaryStage) {
+	Label welcomeLabel = new Label("Welcome to Anagram Solver")
+}
+
+public Scene gameScene(Stage primaryStage) {
+        //primaryStage.setTitle("Anagram Solver");
         wordIndex = 0;
         correctWord = AnagramUtils.getRandomWord(wordIndex);
         jumbledWord = AnagramUtils.jumbleWord(correctWord);
@@ -79,9 +93,9 @@ public void start(Stage primaryStage) {
         VBox layout = new VBox(10, prompt, input, resultLabel, nextButton);
         layout.setAlignment(javafx.geometry.Pos.CENTER);
 
-        Scene scene = new Scene(layout, 600, 400);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return new Scene(layout, 600, 400);
+        //primaryStage.setScene(scene);
+        //primaryStage.show();
     }
     
 
