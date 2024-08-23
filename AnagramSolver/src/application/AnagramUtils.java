@@ -27,18 +27,18 @@ public class AnagramUtils {
 		for (char c : word.toCharArray()) {
 			letters.add(c);
 		}
-		Collections.shuffle(letters);
 		
-		String jumbledWord = new String("");
-		
-		while (!jumbledWord.equalsIgnoreCase(word)) {
+		String jumbledWord;
+		do {
+			Collections.shuffle(letters);
+			StringBuilder sb = new StringBuilder();
 			
-		
 			for (char letter : letters) {
 				//System.out.print(letter + " ");
-				jumbledWord+=letter;
+				sb.append(letter);
 			}
-		}
+			jumbledWord = sb.toString();
+		} while (jumbledWord.equalsIgnoreCase(word));
 		
 		return jumbledWord.toString();
 	}
