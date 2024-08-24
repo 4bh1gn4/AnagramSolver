@@ -51,17 +51,29 @@ public Scene levelScene(Stage primaryStage) {
 	levelLayout.setAlignment(Pos.CENTER);
 	levelLayout.setStyle("-fx-background-color: pink;");
 	
-	levelOne.setOnAction(event -> {primaryStage.setScene(gameScene(primaryStage, ))
-		
+	levelOne.setOnAction(event -> {
+		System.out.println("Level 1 button clicked");
+		level = 1;
+		primaryStage.setScene(gameScene(primaryStage));
 	});
 	
+	levelTwo.setOnAction(event -> {
+		level = 2;
+		primaryStage.setScene(gameScene(primaryStage));
+	});
+	
+	levelThree.setOnAction(event -> {
+		level = 3;
+		primaryStage.setScene(gameScene(primaryStage));
+	});
 	
 	return new Scene(levelLayout, 600, 500);
 }
-public Scene gameScene(Stage primaryStage, ) {
+public Scene gameScene(Stage primaryStage) {
         //primaryStage.setTitle("Anagram Solver");
         wordIndex = 0;
-        correctWord = AnagramUtils.getRandomWord(wordIndex);
+        //level = 0;
+        correctWord = AnagramUtils.getWord(wordIndex, level);
         jumbledWord = AnagramUtils.jumbleWord(correctWord);
         
         Label prompt = new Label(jumbledWord);
@@ -101,9 +113,9 @@ public Scene gameScene(Stage primaryStage, ) {
         });
         
         nextButton.setOnAction(event -> {
-        	if (wordIndex < AnagramUtils.getWordCount()) {
+        	if (wordIndex < AnagramUtils.getWordCount(level)) {
         		wordIndex++;
-        		correctWord = AnagramUtils.getRandomWord(wordIndex);
+        		correctWord = AnagramUtils.getWord(wordIndex, level);
                 jumbledWord = AnagramUtils.jumbleWord(correctWord);
                 prompt.setText(AnagramUtils.jumbleWord(correctWord));
                 textField.clear();

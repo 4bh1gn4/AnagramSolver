@@ -24,9 +24,9 @@ public class AnagramUtils {
 	private static final List<String> fiveLetterWords = new ArrayList<>();
 	
 	static {
-		loadWords("src/application/three_letters.txt", threeLetterWords);
-        loadWords("src/application/four_letters.txt", fourLetterWords);
-        loadWords("src/application/five_letters.txt", fiveLetterWords);
+		loadWords("src/application/three-letters.txt", threeLetterWords);
+        loadWords("src/application/four-letters.txt", fourLetterWords);
+        loadWords("src/application/five-letters.txt", fiveLetterWords);
 	}
 	
 	private static void loadWords(String filePath, List<String> wordList) {
