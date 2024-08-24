@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
  
@@ -96,6 +98,10 @@ public Scene gameScene(Stage primaryStage) {
         input.setAlignment(javafx.geometry.Pos.CENTER);
         
         Button nextButton = new Button("Next");
+        Button backButton = new Button("Back to levels");
+        
+        backButton.setAlignment(javafx.geometry.Pos.BASELINE_RIGHT);
+        //backButton.setVisible(true);
         nextButton.setVisible(false);
         
         submitButton.setOnAction(event -> {
@@ -129,10 +135,25 @@ public Scene gameScene(Stage primaryStage) {
         	}
         });
         
-        VBox layout = new VBox(10, prompt, input, resultLabel, nextButton);
-        layout.setAlignment(javafx.geometry.Pos.CENTER);
+        backButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
+        
+        
+        
+        VBox gameLayout = new VBox(10, prompt, input, resultLabel, nextButton);
+        VBox buttonLayout = new VBox(backButton);
+        buttonLayout.setAlignment(Pos.BOTTOM_RIGHT);
 
-        return new Scene(layout, 600, 400);
+        
+        BorderPane rootLayout = new BorderPane();
+        rootLayout.setCenter(gameLayout);
+        rootLayout.setBottom(buttonLayout);
+
+        // Set margins for backButton (optional for spacing)
+        BorderPane.setMargin(buttonLayout, new Insets(20));
+        
+        gameLayout.setAlignment(javafx.geometry.Pos.CENTER);
+
+        return new Scene(rootLayout, 600, 500);
         //primaryStage.setScene(scene);
         //primaryStage.show();
     }
