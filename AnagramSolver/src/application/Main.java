@@ -5,7 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
 
  
@@ -15,9 +17,32 @@ public class Main extends Application {
 	private String jumbledWord;
 	private int wordIndex;
 	
-	@Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Anagram Solver");
+@Override
+public void start(Stage primaryStage) {
+	primaryStage.setTitle("Anagram Solver");
+	
+	Scene welcomeScene = welcomeScene(primaryStage);
+	Scene gameScene = gameScene(primaryStage);
+	
+	primaryStage.setScene(welcomeScene);
+	primaryStage.show();
+}
+
+public Scene welcomeScene(Stage primaryStage) {
+	Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
+	Button readyButton = new Button("Ready");
+	readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+	
+	VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
+	welcomeLayout.setAlignment(Pos.CENTER);
+	welcomeLayout.setStyle("-fx-background-color: beige;");
+	
+	return new Scene(welcomeLayout, 600, 500);
+	
+}
+
+public Scene gameScene(Stage primaryStage) {
+        //primaryStage.setTitle("Anagram Solver");
         wordIndex = 0;
         correctWord = AnagramUtils.getRandomWord(wordIndex);
         jumbledWord = AnagramUtils.jumbleWord(correctWord);
@@ -33,15 +58,19 @@ public class Main extends Application {
         textField.setMinWidth(200);   // Set minimum width
         textField.setMinHeight(30);   // Set minimum height
         
-        //textField.setPromptText("Type the word here");
+        textField.setPromptText("Type the word here");
         textField.setStyle("-fx-prompt-text-fill: gray;");
 
         Button submitButton = new Button("Submit");
+        
+        HBox input = new HBox(10, textField, submitButton);
+        input.setAlignment(javafx.geometry.Pos.CENTER);
+        
         Button nextButton = new Button("Next");
         nextButton.setVisible(false);
         
         submitButton.setOnAction(event -> {
-        	System.out.println(textField.getPromptText());
+        	//System.out.println(textField.getPromptText());
         	String userInput = textField.getText();
         	if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
         		resultLabel.setText("Correct");
@@ -71,12 +100,12 @@ public class Main extends Application {
         	}
         });
         
-        VBox layout = new VBox(10, prompt, textField, submitButton, resultLabel, nextButton);
+        VBox layout = new VBox(10, prompt, input, resultLabel, nextButton);
         layout.setAlignment(javafx.geometry.Pos.CENTER);
 
-        Scene scene = new Scene(layout, 600, 400);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return new Scene(layout, 600, 400);
+        //primaryStage.setScene(scene);
+        //primaryStage.show();
     }
     
 
