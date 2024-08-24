@@ -91,10 +91,14 @@ public Scene gameScene(Stage primaryStage) {
         
         textField.setPromptText("Type the word here");
         textField.setStyle("-fx-prompt-text-fill: gray;");
-
+        
+        Button hintButton = new Button("Hint");
+        Label hint = new Label();
+        HBox hintLayout = new HBox(10, hintButton, hint);
+        
         Button submitButton = new Button("Submit");
         
-        HBox input = new HBox(10, textField, submitButton);
+        HBox input = new HBox(10, hintLayout, textField, submitButton);
         input.setAlignment(javafx.geometry.Pos.CENTER);
         
         Button nextButton = new Button("Next");
@@ -103,6 +107,12 @@ public Scene gameScene(Stage primaryStage) {
         backButton.setAlignment(javafx.geometry.Pos.BASELINE_RIGHT);
         //backButton.setVisible(true);
         nextButton.setVisible(false);
+        
+        
+        hintButton.setOnAction(event -> {
+        	hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 1));
+        	
+        });
         
         submitButton.setOnAction(event -> {
         	//System.out.println(textField.getPromptText());
@@ -139,19 +149,17 @@ public Scene gameScene(Stage primaryStage) {
         
         
         
+        
         VBox gameLayout = new VBox(10, prompt, input, resultLabel, nextButton);
-        VBox buttonLayout = new VBox(backButton);
-        buttonLayout.setAlignment(Pos.BOTTOM_RIGHT);
-
+        gameLayout.setAlignment(Pos.CENTER);
+        
+        HBox bottomLayout = new HBox(400, hintLayout, backButton);
+        bottomLayout.setAlignment(Pos.CENTER);
+        bottomLayout.setPadding(new Insets(20));
         
         BorderPane rootLayout = new BorderPane();
         rootLayout.setCenter(gameLayout);
-        rootLayout.setBottom(buttonLayout);
-
-        // Set margins for backButton (optional for spacing)
-        BorderPane.setMargin(buttonLayout, new Insets(20));
-        
-        gameLayout.setAlignment(javafx.geometry.Pos.CENTER);
+        rootLayout.setBottom(bottomLayout);
 
         return new Scene(rootLayout, 600, 500);
         //primaryStage.setScene(scene);
