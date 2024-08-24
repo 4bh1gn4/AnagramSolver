@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
 
  
@@ -28,7 +29,16 @@ public void start(Stage primaryStage) {
 }
 
 public Scene welcomeScene(Stage primaryStage) {
-	Label welcomeLabel = new Label("Welcome to Anagram Solver")
+	Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
+	Button readyButton = new Button("Ready");
+	readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+	
+	VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
+	welcomeLayout.setAlignment(Pos.CENTER);
+	welcomeLayout.setStyle("-fx-background-color: beige;");
+	
+	return new Scene(welcomeLayout, 600, 500);
+	
 }
 
 public Scene gameScene(Stage primaryStage) {
