@@ -16,6 +16,7 @@ public class Main extends Application {
 	private String correctWord;
 	private String jumbledWord;
 	private int wordIndex;
+	private int level;
 	
 @Override
 public void start(Stage primaryStage) {

@@ -52,15 +52,21 @@ public class AnagramUtils {
 		}
 	}
 	
-	public static int getWordCount() {
-		return words.size() - 1;
+	public static int getWordCount(int level) {
+		switch (level) {
+        case 1: return threeLetterWords.size() - 1;
+        case 2: return fourLetterWords.size();
+        case 3: return fiveLetterWords.size();
+        default: throw new IllegalArgumentException("Invalid level: " + level);
+		}
 	}
+	/*
 	public static String getRandomWord(int index) {
 		
 		//Collections.shuffle(words); //this way, i do not need to access a word from a random array index
-		return words.get(index);
+		//return words.get(index);
 	}
-	
+	*/
 	public static String jumbleWord(String word) {
 		List<Character> letters = new ArrayList<Character>();
 		for (char c : word.toCharArray()) {
