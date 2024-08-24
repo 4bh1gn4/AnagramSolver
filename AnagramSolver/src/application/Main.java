@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
  
@@ -16,13 +18,14 @@ public class Main extends Application {
 	private String correctWord;
 	private String jumbledWord;
 	private int wordIndex;
+	private int level;
 	
 @Override
 public void start(Stage primaryStage) {
 	primaryStage.setTitle("Anagram Solver");
 	
 	Scene welcomeScene = welcomeScene(primaryStage);
-	Scene gameScene = gameScene(primaryStage);
+	//Scene gameScene = gameScene(primaryStage);
 	
 	primaryStage.setScene(welcomeScene);
 	primaryStage.show();
@@ -31,7 +34,8 @@ public void start(Stage primaryStage) {
 public Scene welcomeScene(Stage primaryStage) {
 	Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
 	Button readyButton = new Button("Ready");
-	readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+	//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+	readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
 	
 	VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
 	welcomeLayout.setAlignment(Pos.CENTER);
@@ -40,11 +44,38 @@ public Scene welcomeScene(Stage primaryStage) {
 	return new Scene(welcomeLayout, 600, 500);
 	
 }
-
+public Scene levelScene(Stage primaryStage) {
+	Button levelOne = new Button("Level 1");
+	Button levelTwo = new Button("Level 2");
+	Button levelThree = new Button("Level 3");
+	
+	HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
+	levelLayout.setAlignment(Pos.CENTER);
+	levelLayout.setStyle("-fx-background-color: pink;");
+	
+	levelOne.setOnAction(event -> {
+		System.out.println("Level 1 button clicked");
+		level = 1;
+		primaryStage.setScene(gameScene(primaryStage));
+	});
+	
+	levelTwo.setOnAction(event -> {
+		level = 2;
+		primaryStage.setScene(gameScene(primaryStage));
+	});
+	
+	levelThree.setOnAction(event -> {
+		level = 3;
+		primaryStage.setScene(gameScene(primaryStage));
+	});
+	
+	return new Scene(levelLayout, 600, 500);
+}
 public Scene gameScene(Stage primaryStage) {
         //primaryStage.setTitle("Anagram Solver");
         wordIndex = 0;
-        correctWord = AnagramUtils.getRandomWord(wordIndex);
+        //level = 0;
+        correctWord = AnagramUtils.getWord(wordIndex, level);
         jumbledWord = AnagramUtils.jumbleWord(correctWord);
         
         Label prompt = new Label(jumbledWord);
@@ -67,6 +98,10 @@ public Scene gameScene(Stage primaryStage) {
         input.setAlignment(javafx.geometry.Pos.CENTER);
         
         Button nextButton = new Button("Next");
+        Button backButton = new Button("Back to levels");
+        
+        backButton.setAlignment(javafx.geometry.Pos.BASELINE_RIGHT);
+        //backButton.setVisible(true);
         nextButton.setVisible(false);
         
         submitButton.setOnAction(event -> {
@@ -84,9 +119,9 @@ public Scene gameScene(Stage primaryStage) {
         });
         
         nextButton.setOnAction(event -> {
-        	if (wordIndex < AnagramUtils.getWordCount()) {
+        	if (wordIndex < AnagramUtils.getWordCount(level)) {
         		wordIndex++;
-        		correctWord = AnagramUtils.getRandomWord(wordIndex);
+        		correctWord = AnagramUtils.getWord(wordIndex, level);
                 jumbledWord = AnagramUtils.jumbleWord(correctWord);
                 prompt.setText(AnagramUtils.jumbleWord(correctWord));
                 textField.clear();
@@ -100,10 +135,25 @@ public Scene gameScene(Stage primaryStage) {
         	}
         });
         
-        VBox layout = new VBox(10, prompt, input, resultLabel, nextButton);
-        layout.setAlignment(javafx.geometry.Pos.CENTER);
+        backButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
+        
+        
+        
+        VBox gameLayout = new VBox(10, prompt, input, resultLabel, nextButton);
+        VBox buttonLayout = new VBox(backButton);
+        buttonLayout.setAlignment(Pos.BOTTOM_RIGHT);
 
-        return new Scene(layout, 600, 400);
+        
+        BorderPane rootLayout = new BorderPane();
+        rootLayout.setCenter(gameLayout);
+        rootLayout.setBottom(buttonLayout);
+
+        // Set margins for backButton (optional for spacing)
+        BorderPane.setMargin(buttonLayout, new Insets(20));
+        
+        gameLayout.setAlignment(javafx.geometry.Pos.CENTER);
+
+        return new Scene(rootLayout, 600, 500);
         //primaryStage.setScene(scene);
         //primaryStage.show();
     }
