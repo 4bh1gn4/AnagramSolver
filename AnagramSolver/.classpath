@@ -59,5 +59,11 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/abhicode/javafx-sdk-22.0.2/bin"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/abhicode/gson-2.11.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/abhicode"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

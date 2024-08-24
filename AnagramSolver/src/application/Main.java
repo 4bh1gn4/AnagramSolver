@@ -22,7 +22,7 @@ public void start(Stage primaryStage) {
 	primaryStage.setTitle("Anagram Solver");
 	
 	Scene welcomeScene = welcomeScene(primaryStage);
-	Scene gameScene = gameScene(primaryStage);
+	//Scene gameScene = gameScene(primaryStage);
 	
 	primaryStage.setScene(welcomeScene);
 	primaryStage.show();
@@ -31,7 +31,8 @@ public void start(Stage primaryStage) {
 public Scene welcomeScene(Stage primaryStage) {
 	Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
 	Button readyButton = new Button("Ready");
-	readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+	//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+	readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
 	
 	VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
 	welcomeLayout.setAlignment(Pos.CENTER);
@@ -40,8 +41,23 @@ public Scene welcomeScene(Stage primaryStage) {
 	return new Scene(welcomeLayout, 600, 500);
 	
 }
-
-public Scene gameScene(Stage primaryStage) {
+public Scene levelScene(Stage primaryStage) {
+	Button levelOne = new Button("Level 1");
+	Button levelTwo = new Button("Level 2");
+	Button levelThree = new Button("Level 3");
+	
+	HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
+	levelLayout.setAlignment(Pos.CENTER);
+	levelLayout.setStyle("-fx-background-color: pink;");
+	
+	levelOne.setOnAction(event -> {primaryStage.setScene(gameScene(primaryStage, ))
+		
+	});
+	
+	
+	return new Scene(levelLayout, 600, 500);
+}
+public Scene gameScene(Stage primaryStage, ) {
         //primaryStage.setTitle("Anagram Solver");
         wordIndex = 0;
         correctWord = AnagramUtils.getRandomWord(wordIndex);

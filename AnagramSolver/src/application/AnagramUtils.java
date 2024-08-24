@@ -1,13 +1,19 @@
 package application;
 
 //import java.util.random;
+//import com.google.gson.Gson;
+//import com.google.gson.JsonArray;
+//import com.google.gson.JsonElement;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class AnagramUtils {
-	private static final List<String> words = Arrays.asList("hello", "type", "stop", "phone", "short", "");
+	private static final List<String> words = Arrays.asList("hello", "type", "stop", "phone", "short", "blue");
     
 	public static String getWord(int index) {
 		return words.get(index);
