@@ -94,6 +94,9 @@ public Scene gameScene(Stage primaryStage) {
         
         Button hintButton = new Button("Hint");
         Label hint = new Label();
+        hint.setPrefWidth(50);
+        //hint.setPadding(new Insets(0, 5, 0, 0)); 
+        
         HBox hintLayout = new HBox(10, hintButton, hint);
         
         Button submitButton = new Button("Submit");
@@ -153,17 +156,24 @@ public Scene gameScene(Stage primaryStage) {
         VBox gameLayout = new VBox(10, prompt, input, resultLabel, nextButton);
         gameLayout.setAlignment(Pos.CENTER);
         
-        HBox bottomLayout = new HBox(400, hintLayout, backButton);
-        bottomLayout.setAlignment(Pos.CENTER);
-        bottomLayout.setPadding(new Insets(20));
-        
+        HBox leftBottomLayout = new HBox(hintLayout);
+        leftBottomLayout.setAlignment(Pos.BOTTOM_LEFT);
+        leftBottomLayout.setPadding(new Insets(20));
+
+        // Align the back button to the bottom-right
+        HBox rightBottomLayout = new HBox(backButton);
+        rightBottomLayout.setAlignment(Pos.BOTTOM_RIGHT);
+        rightBottomLayout.setPadding(new Insets(20));
+
         BorderPane rootLayout = new BorderPane();
         rootLayout.setCenter(gameLayout);
+        BorderPane bottomLayout = new BorderPane();
+        bottomLayout.setLeft(leftBottomLayout);
+        bottomLayout.setRight(rightBottomLayout);
+
         rootLayout.setBottom(bottomLayout);
 
         return new Scene(rootLayout, 600, 500);
-        //primaryStage.setScene(scene);
-        //primaryStage.show();
     }
     
 
