@@ -55,7 +55,7 @@ public class Main extends Application {
 		levelLayout.setStyle("-fx-background-color: pink;");
 		
 		levelOne.setOnAction(event -> {
-			System.out.println("Level 1 button clicked");
+			//System.out.println("Level 1 button clicked");
 			level = 1;
 			primaryStage.setScene(gameScene(primaryStage));
 		});
@@ -124,15 +124,24 @@ public class Main extends Application {
         	//System.out.println(textField.getPromptText());
         	String userInput = textField.getText();
         	if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
-        		 switch(wrong) {
-        		 case 0: resultLabel.setText("Correct");
-        		 case 1: resultLabel.setText("Correct");
-        		 case 2: resultLabel.setText("There we go!");
-        		 case 3: resultLabel.setText("There we go!");
-        		 case 4: resultLabel.setText("Never back down never what 💀");
-        		 case 5: resultLabel.setText("Never back down never what 💀");
-        		 }
-        		 System.out.println(resultLabel);
+        		switch(wrong) {
+                case 0: 
+                    resultLabel.setText("Correct");
+                    break;
+                case 1: 
+                    resultLabel.setText("Correct");
+                    break;
+                case 2: 
+                    resultLabel.setText("There we go!");
+                    break;
+                case 3: 
+                    resultLabel.setText("There we go!");
+                    break;
+                default: 
+                    resultLabel.setText("Never back down never what 💀");
+                    break;
+            }
+        		 //System.out.println(resultLabel);
         		 nextButton.setVisible(true);
         		
            	}
