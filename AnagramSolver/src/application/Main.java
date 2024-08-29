@@ -19,60 +19,63 @@ public class Main extends Application {
 	private String jumbledWord;
 	private int wordIndex;
 	private int level;
+	private int wrong;
 	
 @Override
-public void start(Stage primaryStage) {
-	primaryStage.setTitle("Anagram Solver");
+	public void start(Stage primaryStage) {
+		primaryStage.setTitle("Anagram Solver");
+		
+		Scene welcomeScene = welcomeScene(primaryStage);
+		//Scene gameScene = gameScene(primaryStage);
+		
+		primaryStage.setScene(welcomeScene);
+		primaryStage.show();
+	}
 	
-	Scene welcomeScene = welcomeScene(primaryStage);
-	//Scene gameScene = gameScene(primaryStage);
+	public Scene welcomeScene(Stage primaryStage) {
+		Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
+		Button readyButton = new Button("Ready");
+		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
+		readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
+		
+		VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
+		welcomeLayout.setAlignment(Pos.CENTER);
+		welcomeLayout.setStyle("-fx-background-color: beige;");
+		
+		return new Scene(welcomeLayout, 600, 500);
+		
+	}
+	public Scene levelScene(Stage primaryStage) {
+		Button levelOne = new Button("Level 1 (3 letters)");
+		Button levelTwo = new Button("Level 2 (4 letters)");
+		Button levelThree = new Button("Level 3 (5 letters)");
+		
+		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
+		levelLayout.setAlignment(Pos.CENTER);
+		levelLayout.setStyle("-fx-background-color: pink;");
+		
+		levelOne.setOnAction(event -> {
+			//System.out.println("Level 1 button clicked");
+			level = 1;
+			primaryStage.setScene(gameScene(primaryStage));
+		});
+		
+		levelTwo.setOnAction(event -> {
+			level = 2;
+			primaryStage.setScene(gameScene(primaryStage));
+		});
+		
+		levelThree.setOnAction(event -> {
+			level = 3;
+			primaryStage.setScene(gameScene(primaryStage));
+		});
+		
+		return new Scene(levelLayout, 600, 500);
+	}
 	
-	primaryStage.setScene(welcomeScene);
-	primaryStage.show();
-}
-
-public Scene welcomeScene(Stage primaryStage) {
-	Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
-	Button readyButton = new Button("Ready");
-	//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
-	readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
-	
-	VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
-	welcomeLayout.setAlignment(Pos.CENTER);
-	welcomeLayout.setStyle("-fx-background-color: beige;");
-	
-	return new Scene(welcomeLayout, 600, 500);
-	
-}
-public Scene levelScene(Stage primaryStage) {
-	Button levelOne = new Button("Level 1");
-	Button levelTwo = new Button("Level 2");
-	Button levelThree = new Button("Level 3");
-	
-	HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
-	levelLayout.setAlignment(Pos.CENTER);
-	levelLayout.setStyle("-fx-background-color: pink;");
-	
-	levelOne.setOnAction(event -> {
-		System.out.println("Level 1 button clicked");
-		level = 1;
-		primaryStage.setScene(gameScene(primaryStage));
-	});
-	
-	levelTwo.setOnAction(event -> {
-		level = 2;
-		primaryStage.setScene(gameScene(primaryStage));
-	});
-	
-	levelThree.setOnAction(event -> {
-		level = 3;
-		primaryStage.setScene(gameScene(primaryStage));
-	});
-	
-	return new Scene(levelLayout, 600, 500);
-}
-public Scene gameScene(Stage primaryStage) {
+	public Scene gameScene(Stage primaryStage) {
         //primaryStage.setTitle("Anagram Solver");
+		wrong = 0;
         wordIndex = 0;
         //level = 0;
         correctWord = AnagramUtils.getWord(wordIndex, level);
@@ -120,19 +123,43 @@ public Scene gameScene(Stage primaryStage) {
         submitButton.setOnAction(event -> {
         	//System.out.println(textField.getPromptText());
         	String userInput = textField.getText();
-        	if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
-        		resultLabel.setText("Correct");
-        		nextButton.setVisible(true);
-        		
+        	//System.out.println(userInput);
+        	if (userInput.equals("")) {
+        		resultLabel.setText("Please enter a valid answer.");
+        	}
+        	
+        	else if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
+        		switch(wrong) {
+                case 0: 
+                    resultLabel.setText("Correct");
+                    break;
+                case 1: 
+                    resultLabel.setText("Correct");
+                    break;
+                case 2: 
+                    resultLabel.setText("There we go!");
+                    break;
+                case 3: 
+                    resultLabel.setText("There we go!");
+                    break;
+                default: 
+                    resultLabel.setText("Never back down never what 💀");
+                    break;
+        		}
+        		 //System.out.println(resultLabel);
+        		 nextButton.setVisible(true);
            	}
+        	
         	else {
-        		resultLabel.setText("Incorrect");
+        		resultLabel.setText(incorrectResponse(wrong));
+        		wrong++;
         		nextButton.setVisible(false);
         	}
         });
         
         nextButton.setOnAction(event -> {
         	if (wordIndex < AnagramUtils.getWordCount(level)) {
+        		wrong = 0;
         		wordIndex++;
         		correctWord = AnagramUtils.getWord(wordIndex, level);
                 jumbledWord = AnagramUtils.jumbleWord(correctWord);
@@ -149,9 +176,6 @@ public Scene gameScene(Stage primaryStage) {
         });
         
         backButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
-        
-        
-        
         
         VBox gameLayout = new VBox(10, prompt, input, resultLabel, nextButton);
         gameLayout.setAlignment(Pos.CENTER);
@@ -176,7 +200,18 @@ public Scene gameScene(Stage primaryStage) {
         return new Scene(rootLayout, 600, 500);
     }
     
-
+	public String incorrectResponse(int wrongNumber) {
+		//wrongNumber++;
+		String[] array = {"Incorrect", "Nope", "Wrong again", "No, sorry", "Try again",
+				"...Maybe try again later?", "Taking a break is always a good idea!"};
+		
+		if (wrongNumber > (array.length - 1)) {
+			return "I've given up on you";
+		}
+		
+		return array[wrongNumber];
+	}
+	
     public static void main(String[] args) {
         launch(args);
     }
