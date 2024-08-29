@@ -46,9 +46,9 @@ public class Main extends Application {
 		
 	}
 	public Scene levelScene(Stage primaryStage) {
-		Button levelOne = new Button("Level 1");
-		Button levelTwo = new Button("Level 2");
-		Button levelThree = new Button("Level 3");
+		Button levelOne = new Button("Level 1 (3 letters)");
+		Button levelTwo = new Button("Level 2 (4 letters)");
+		Button levelThree = new Button("Level 3 (5 letters)");
 		
 		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
 		levelLayout.setAlignment(Pos.CENTER);
@@ -123,7 +123,12 @@ public class Main extends Application {
         submitButton.setOnAction(event -> {
         	//System.out.println(textField.getPromptText());
         	String userInput = textField.getText();
-        	if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
+        	//System.out.println(userInput);
+        	if (userInput.equals("")) {
+        		resultLabel.setText("Please enter a valid answer.");
+        	}
+        	
+        	else if (AnagramUtils.isCorrectWord(userInput, correctWord)) {
         		switch(wrong) {
                 case 0: 
                     resultLabel.setText("Correct");
@@ -140,10 +145,9 @@ public class Main extends Application {
                 default: 
                     resultLabel.setText("Never back down never what 💀");
                     break;
-            }
+        		}
         		 //System.out.println(resultLabel);
         		 nextButton.setVisible(true);
-        		
            	}
         	
         	else {
