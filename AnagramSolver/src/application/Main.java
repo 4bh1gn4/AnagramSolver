@@ -20,6 +20,7 @@ public class Main extends Application {
 	private int wordIndex;
 	private int level;
 	private int wrong;
+	private int hintNum;
 	
 @Override
 	public void start(Stage primaryStage) {
@@ -83,6 +84,7 @@ public class Main extends Application {
         //primaryStage.setTitle("Anagram Solver");
 		wrong = 0;
         wordIndex = 0;
+        hintNum = 0;
         //level = 0;
         correctWord = AnagramUtils.getWord(wordIndex, level);
         jumbledWord = AnagramUtils.jumbleWord(correctWord);
@@ -122,7 +124,19 @@ public class Main extends Application {
         
         
         hintButton.setOnAction(event -> {
-        	hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 1));
+        	//hintNum;
+        	hintNum++;
+        	if (hintNum == 1) {
+        		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 1));
+        	}
+        	else if (hintNum == 2) {
+        		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 2));
+        	}
+        	else {
+        		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 3));
+        	}
+        	
+        	
         	
         });
         
@@ -174,6 +188,7 @@ public class Main extends Application {
                 resultLabel.setText("");
                 hint.setText("");
                 nextButton.setVisible(false);
+                hintNum = 0;
                 
         	}
         	else {
