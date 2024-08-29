@@ -103,7 +103,7 @@ public class Main extends Application {
         textField.setPromptText("Type the word here");
         textField.setStyle("-fx-prompt-text-fill: gray;");
         
-        Button hintButton = new Button("Hint");
+        Button hintButton = new Button("Hint (3)");
         Label hint = new Label();
         hint.setPrefWidth(50);
         //hint.setPadding(new Insets(0, 5, 0, 0)); 
@@ -123,16 +123,19 @@ public class Main extends Application {
         nextButton.setVisible(false);
         
         
-        hintButton.setOnAction(event -> {
+        hintButton.setOnAction	(event -> {
         	//hintNum;
         	hintNum++;
         	if (hintNum == 1) {
+        		hintButton.setText("Hint (2)");
         		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 1));
         	}
         	else if (hintNum == 2) {
+        		hintButton.setText("Hint (1)");
         		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 2));
         	}
         	else {
+        		hintButton.setText("Hint (0)");
         		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 3));
         	}
         	
@@ -187,6 +190,7 @@ public class Main extends Application {
                 textField.clear();
                 resultLabel.setText("");
                 hint.setText("");
+                hintButton.setText("Hint (3)");
                 nextButton.setVisible(false);
                 hintNum = 0;
                 
