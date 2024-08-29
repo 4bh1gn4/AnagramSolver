@@ -49,8 +49,9 @@ public class Main extends Application {
 		Button levelOne = new Button("Level 1 (3 letters)");
 		Button levelTwo = new Button("Level 2 (4 letters)");
 		Button levelThree = new Button("Level 3 (5 letters)");
+		Button levelFour = new Button("Level 4 (6 letters)");
 		
-		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
+		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree, levelFour);
 		levelLayout.setAlignment(Pos.CENTER);
 		levelLayout.setStyle("-fx-background-color: pink;");
 		
@@ -67,6 +68,11 @@ public class Main extends Application {
 		
 		levelThree.setOnAction(event -> {
 			level = 3;
+			primaryStage.setScene(gameScene(primaryStage));
+		});
+		
+		levelFour.setOnAction(event -> {
+			level = 4;
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
