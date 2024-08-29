@@ -166,6 +166,7 @@ public class Main extends Application {
                 prompt.setText(AnagramUtils.jumbleWord(correctWord));
                 textField.clear();
                 resultLabel.setText("");
+                hint.setText("");
                 nextButton.setVisible(false);
                 
         	}
