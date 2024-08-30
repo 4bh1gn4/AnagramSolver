@@ -22,11 +22,13 @@ public class AnagramUtils {
 	private static final List<String> threeLetterWords = new ArrayList<>();
 	private static final List<String> fourLetterWords = new ArrayList<>();
 	private static final List<String> fiveLetterWords = new ArrayList<>();
+	private static final List<String> sixLetterWords = new ArrayList<>();
 	
 	static {
 		loadWords("src/application/three-letters.txt", threeLetterWords);
         loadWords("src/application/four-letters.txt", fourLetterWords);
         loadWords("src/application/five-letters.txt", fiveLetterWords);
+        loadWords("src/application/six-letters.txt", sixLetterWords);
 	}
 	
 	private static void loadWords(String filePath, List<String> wordList) {
@@ -48,6 +50,7 @@ public class AnagramUtils {
 		case 1: return threeLetterWords.get(index);
 		case 2: return fourLetterWords.get(index);
 		case 3: return fiveLetterWords.get(index);
+		case 4: return sixLetterWords.get(index);
 		default: throw new IllegalArgumentException("Invalid level: " + level);
 		}
 	}
@@ -57,6 +60,7 @@ public class AnagramUtils {
         case 1: return threeLetterWords.size() - 1;
         case 2: return fourLetterWords.size();
         case 3: return fiveLetterWords.size();
+        case 4: return sixLetterWords.size();
         default: throw new IllegalArgumentException("Invalid level: " + level);
 		}
 	}

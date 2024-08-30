@@ -20,6 +20,7 @@ public class Main extends Application {
 	private int wordIndex;
 	private int level;
 	private int wrong;
+	private int hintNum;
 	
 @Override
 	public void start(Stage primaryStage) {
@@ -49,8 +50,9 @@ public class Main extends Application {
 		Button levelOne = new Button("Level 1 (3 letters)");
 		Button levelTwo = new Button("Level 2 (4 letters)");
 		Button levelThree = new Button("Level 3 (5 letters)");
+		Button levelFour = new Button("Level 4 (6 letters)");
 		
-		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree);
+		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree, levelFour);
 		levelLayout.setAlignment(Pos.CENTER);
 		levelLayout.setStyle("-fx-background-color: pink;");
 		
@@ -70,6 +72,11 @@ public class Main extends Application {
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
+		levelFour.setOnAction(event -> {
+			level = 4;
+			primaryStage.setScene(gameScene(primaryStage));
+		});
+		
 		return new Scene(levelLayout, 600, 500);
 	}
 	
@@ -77,6 +84,7 @@ public class Main extends Application {
         //primaryStage.setTitle("Anagram Solver");
 		wrong = 0;
         wordIndex = 0;
+        hintNum = 0;
         //level = 0;
         correctWord = AnagramUtils.getWord(wordIndex, level);
         jumbledWord = AnagramUtils.jumbleWord(correctWord);
@@ -95,7 +103,7 @@ public class Main extends Application {
         textField.setPromptText("Type the word here");
         textField.setStyle("-fx-prompt-text-fill: gray;");
         
-        Button hintButton = new Button("Hint");
+        Button hintButton = new Button("Hint (3)");
         Label hint = new Label();
         hint.setPrefWidth(50);
         //hint.setPadding(new Insets(0, 5, 0, 0)); 
@@ -115,8 +123,23 @@ public class Main extends Application {
         nextButton.setVisible(false);
         
         
-        hintButton.setOnAction(event -> {
-        	hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 1));
+        hintButton.setOnAction	(event -> {
+        	//hintNum;
+        	hintNum++;
+        	if (hintNum == 1) {
+        		hintButton.setText("Hint (2)");
+        		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 1));
+        	}
+        	else if (hintNum == 2) {
+        		hintButton.setText("Hint (1)");
+        		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 2));
+        	}
+        	else {
+        		hintButton.setText("Hint (0)");
+        		hint.setText(AnagramUtils.getWord(wordIndex, level).substring(0, 3));
+        	}
+        	
+        	
         	
         });
         
@@ -166,7 +189,10 @@ public class Main extends Application {
                 prompt.setText(AnagramUtils.jumbleWord(correctWord));
                 textField.clear();
                 resultLabel.setText("");
+                hint.setText("");
+                hintButton.setText("Hint (3)");
                 nextButton.setVisible(false);
+                hintNum = 0;
                 
         	}
         	else {
