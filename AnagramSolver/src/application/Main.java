@@ -14,6 +14,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
  
@@ -45,7 +46,27 @@ public class Main extends Application {
 	private Button createSettingsButton() {
 	    Button settingsButton = new Button("Settings");
 	    // Add any additional settings button configuration here
+	    settingsButton.setOnAction(event -> openPopup());
 	    return settingsButton;
+	}
+	
+	private void openPopup() {
+		Stage popupStage = new Stage();
+		popupStage.setTitle("Popup Window");
+		//prevents interaction with other windows until pop up is closed
+		//popupStage.initModality(Modality.APPLICATION_MODAL);
+		//
+		Label messageLabel = new Label("This is a popup window!");
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> popupStage.close());
+
+        VBox popupLayout = new VBox(10, messageLabel, closeButton);
+        popupLayout.setPadding(new Insets(20));
+        popupLayout.setStyle("-fx-background-color: #FFFFFF;"); // White background for popup
+
+        Scene popupScene = new Scene(popupLayout, 400, 300);
+        popupStage.setScene(popupScene);
+        popupStage.show();
 	}
 	
 	private BorderPane createBaseLayout() {
