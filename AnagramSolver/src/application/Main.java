@@ -43,6 +43,11 @@ public class Main extends Application {
         mediaPlayer = new MediaPlayer(bgMusic);
         mediaPlayer.setAutoPlay(true);
         
+        mediaPlayer.setOnEndOfMedia(() -> {
+        	mediaPlayer.seek(mediaPlayer.getStartTime());
+        	mediaPlayer.play();
+        });
+        
 		Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
 		Button readyButton = new Button("Ready");
 		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
