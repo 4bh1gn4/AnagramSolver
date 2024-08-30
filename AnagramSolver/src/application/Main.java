@@ -1,5 +1,5 @@
 package application;
-
+import java.io.File;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,18 +9,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
  
 
 public class Main extends Application {
+	private MediaPlayer mediaPlayer;
 	private String correctWord;
 	private String jumbledWord;
 	private int wordIndex;
 	private int level;
 	private int wrong;
 	private int hintNum;
+	
 	
 @Override
 	public void start(Stage primaryStage) {
@@ -34,6 +39,10 @@ public class Main extends Application {
 	}
 	
 	public Scene welcomeScene(Stage primaryStage) {
+		Media bgMusic = new Media(new File("src/application/background music.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(bgMusic);
+        mediaPlayer.setAutoPlay(true);
+        
 		Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
 		Button readyButton = new Button("Ready");
 		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
@@ -81,7 +90,8 @@ public class Main extends Application {
 	}
 	
 	public Scene gameScene(Stage primaryStage) {
-        //primaryStage.setTitle("Anagram Solver");
+		
+		//primaryStage.setTitle("Anagram Solver");
 		wrong = 0;
         wordIndex = 0;
         hintNum = 0;
