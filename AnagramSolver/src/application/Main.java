@@ -25,12 +25,13 @@ public class Main extends Application {
 	private int level;
 	private int wrong;
 	private int hintNum;
+	private Button settingsButton;
 	
 	
 @Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Anagram Solver");
-		
+		settingsButton = createSettingsButton();
 		Scene welcomeScene = welcomeScene(primaryStage);
 		//Scene gameScene = gameScene(primaryStage);
 		
@@ -38,6 +39,25 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
+	private Button createSettingsButton() {
+	    Button settingsButton = new Button("Settings");
+	    // Add any additional settings button configuration here
+	    return settingsButton;
+	}
+	
+	private BorderPane createBaseLayout() {
+	    BorderPane rootLayout = new BorderPane();
+	    
+	    // Create and configure top layout with settings button
+	    BorderPane topLayout = new BorderPane();
+	    topLayout.setRight(settingsButton);
+	    BorderPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
+	    topLayout.setPadding(new Insets(10, 10, 0, 0));
+	    
+	    rootLayout.setTop(topLayout);
+	    return rootLayout;
+	}
+
 	public Scene welcomeScene(Stage primaryStage) {
 		Media bgMusic = new Media(new File("src/application/background music.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(bgMusic);
@@ -48,6 +68,10 @@ public class Main extends Application {
         	mediaPlayer.play();
         });
         
+        //Button settingsButton = new Button("Settings");
+        //VBox settingsLayout = new VBox(settingsButton);
+        //settingsLayout.setAlignment(Pos.TOP_RIGHT);
+        
 		Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
 		Button readyButton = new Button("Ready");
 		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
@@ -57,7 +81,10 @@ public class Main extends Application {
 		welcomeLayout.setAlignment(Pos.CENTER);
 		welcomeLayout.setStyle("-fx-background-color: beige;");
 		
-		return new Scene(welcomeLayout, 600, 500);
+		BorderPane rootLayout = createBaseLayout();
+        rootLayout.setCenter(welcomeLayout);
+
+        return new Scene(rootLayout, 600, 500);
 		
 	}
 	public Scene levelScene(Stage primaryStage) {
@@ -91,7 +118,10 @@ public class Main extends Application {
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
-		return new Scene(levelLayout, 600, 500);
+		BorderPane rootLayout = createBaseLayout();
+        rootLayout.setCenter(levelLayout);
+
+        return new Scene(rootLayout, 600, 500);
 	}
 	
 	public Scene gameScene(Stage primaryStage) {
