@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -26,6 +27,7 @@ public class Main extends Application {
 	private int wrong;
 	private int hintNum;
 	private Button settingsButton;
+	private static final String BG_COLOR = "#FFC0CB";
 	
 	
 @Override
@@ -33,8 +35,9 @@ public class Main extends Application {
 		primaryStage.setTitle("Anagram Solver");
 		settingsButton = createSettingsButton();
 		Scene welcomeScene = welcomeScene(primaryStage);
+	    welcomeScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
 		//Scene gameScene = gameScene(primaryStage);
-		
 		primaryStage.setScene(welcomeScene);
 		primaryStage.show();
 	}
@@ -53,7 +56,7 @@ public class Main extends Application {
 	    topLayout.setRight(settingsButton);
 	    BorderPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
 	    topLayout.setPadding(new Insets(10, 10, 0, 0));
-	    
+	    rootLayout.getStyleClass().add("root");
 	    rootLayout.setTop(topLayout);
 	    return rootLayout;
 	}
@@ -79,13 +82,15 @@ public class Main extends Application {
 		
 		VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
 		welcomeLayout.setAlignment(Pos.CENTER);
-		welcomeLayout.setStyle("-fx-background-color: beige;");
+		//welcomeLayout.setStyle("-fx-background-color: " + BG_COLOR + ";");
 		
 		BorderPane rootLayout = createBaseLayout();
-        rootLayout.setCenter(welcomeLayout);
-
-        return new Scene(rootLayout, 600, 500);
-		
+	    rootLayout.setCenter(welcomeLayout);
+	    
+	    Scene scene = new Scene(rootLayout, 600, 500);
+	    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
+	    
+	    return scene;
 	}
 	public Scene levelScene(Stage primaryStage) {
 		Button levelOne = new Button("Level 1 (3 letters)");
@@ -95,7 +100,7 @@ public class Main extends Application {
 		
 		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree, levelFour);
 		levelLayout.setAlignment(Pos.CENTER);
-		levelLayout.setStyle("-fx-background-color: pink;");
+		//levelLayout.setStyle("-fx-background-color: " + BG_COLOR + ";");
 		
 		levelOne.setOnAction(event -> {
 			//System.out.println("Level 1 button clicked");
@@ -119,9 +124,12 @@ public class Main extends Application {
 		});
 		
 		BorderPane rootLayout = createBaseLayout();
-        rootLayout.setCenter(levelLayout);
-
-        return new Scene(rootLayout, 600, 500);
+	    rootLayout.setCenter(levelLayout);
+	    
+	    Scene scene = new Scene(rootLayout, 600, 500);
+	    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
+	    
+	    return scene;
 	}
 	
 	public Scene gameScene(Stage primaryStage) {
@@ -268,7 +276,18 @@ public class Main extends Application {
 
         rootLayout.setBottom(bottomLayout);
 
-        return new Scene(rootLayout, 600, 500);
+        // Add the settings button to the top of the root layout
+        BorderPane topLayout = new BorderPane();
+        topLayout.setRight(settingsButton);
+        BorderPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
+        topLayout.setPadding(new Insets(10, 10, 0, 0));
+
+        rootLayout.setTop(topLayout);
+
+        Scene scene = new Scene(rootLayout, 600, 500);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
+        
+        return scene;
     }
     
 	public String incorrectResponse(int wrongNumber) {
