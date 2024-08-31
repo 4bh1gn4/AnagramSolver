@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
@@ -45,9 +47,15 @@ public class Main extends Application {
 	}
 	
 	private Button createSettingsButton() {
-	    Button settingsButton = new Button("Settings");
+		Image settingsIcon = new Image(getClass().getResourceAsStream("/application/settings.png"));
+		ImageView settingsImageView = createImageView(settingsIcon, 30);
+		
+	    Button settingsButton = new Button();
+	    settingsButton.setGraphic(settingsImageView);
+	    pushButton(settingsButton);
+	    
 	    // Add any additional settings button configuration here
-	    settingsButton.setOnAction(event -> openPopup());
+	    //settingsButton.setOnAction(event -> openPopup());
 	    return settingsButton;
 	}
 	
@@ -330,7 +338,29 @@ public class Main extends Application {
         
         return scene;
     }
-    
+    public void pushButton(Button button) {
+    	button.setStyle("-fx-background-color: transparent; -fx-border-color:transparent;");
+    	button.setOnMousePressed(event -> {
+    		ImageView imageView = (ImageView) button.getGraphic();
+    		imageView.setScaleX(0.9);
+    		imageView.setScaleY(0.9);
+    	});
+    	
+    	button.setOnMouseReleased(event -> {
+    		ImageView imageView = (ImageView) button.getGraphic();
+    		imageView.setScaleX(1.0);
+    		imageView.setScaleY(1.0);
+    		openPopup();
+    	});
+    }
+	public ImageView createImageView(Image image, int length) {
+		ImageView imageView = new ImageView(image);
+		imageView.setFitWidth(length);
+		imageView.setFitHeight(length);
+		imageView.setPreserveRatio(true);
+		
+		return imageView;
+	}
 	public String incorrectResponse(int wrongNumber) {
 		//wrongNumber++;
 		String[] array = {"Incorrect", "Nope", "Wrong again", "No, sorry", "Try again",
