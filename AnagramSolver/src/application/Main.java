@@ -36,7 +36,7 @@ public class Main extends Application {
 	
 @Override
 	public void start(Stage primaryStage) {
-		primaryStage.setTitle("Anagram Solver");
+		primaryStage.setTitle("Unscrabble");
 		settingsButton = createSettingsButton();
 		Scene welcomeScene = welcomeScene(primaryStage);
 	    welcomeScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
@@ -66,7 +66,7 @@ public class Main extends Application {
 		//popupStage.initModality(Modality.APPLICATION_MODAL);
 		//
 		
-		Label volumeLabel = new Label("Volume:");
+		Label volumeLabel = new Label("Music Volume:");
 		Slider volumeSlider = new Slider(0, 100, mediaPlayer.getVolume() * 100);
 		volumeSlider.setShowTickLabels(true);
 		volumeSlider.setShowTickMarks(true);
@@ -77,24 +77,40 @@ public class Main extends Application {
 			mediaPlayer.setVolume(newVal.doubleValue() / 100.0);
 		});
 		
-		VBox settingsLayout = new VBox(10, volumeLabel, volumeSlider);
+		Label colorsLabel = new Label("Background colors:");
+		Button skyBlue = createBackgroundColorButton("#87CEEB", "bg-skyBlue");
+		Button paleGreen = createBackgroundColorButton("#98FB98", "bg-paleGreen");
+		Button lavender = createBackgroundColorButton("#E6E6FA", "bg-lavender");
+		Button lightPink = createBackgroundColorButton("#FFB6C1", "bg-lightPink");
+		Button lightCoral = createBackgroundColorButton("#F08080", "bg-lightCoral");
+		Button lightYellow = createBackgroundColorButton("#FAFAD2", "bg-lightYellow");
+		Button lightSeaGreen = createBackgroundColorButton("#20B2AA", "bg-lightSeaGreen");
+		Button mistyRose = createBackgroundColorButton("#FFE4E1", "bg-mistyRose");
+		HBox colorsList = new HBox(10, skyBlue, paleGreen, lavender, lightPink, lightCoral, lightYellow, lightSeaGreen, mistyRose);
+		
+		
+		VBox settingsLayout = new VBox(10, volumeLabel, volumeSlider, colorsLabel, colorsList);
 		settingsLayout.setPadding(new Insets(20));
 		Scene settingsScene = new Scene(settingsLayout, 400, 300);
 		settingsStage.setScene(settingsScene);
 		settingsStage.show();
-		/*
-		Label messageLabel = new Label("This is a popup window!");
-        Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> popupStage.close());
+		
+	}
+	
+	public Button createBackgroundColorButton(String colorCode, String className) {
+		Button colorButton = new Button();
+		colorButton.setStyle("-fx-background-color: " + colorCode + ";");
+		colorButton.setOnAction(event -> changeBackgroundColor(className));
+		colorButton.setMinWidth(30);
+		colorButton.setMinHeight(20);
+		return colorButton;
+	}
+	
+	public void changeBackgroundColor(String colorCode) {
+		Scene scene = settingsButton.getScene();
+		BorderPane root = (BorderPane) scene.getRoot();
+	    root.setStyle("-fx-background-color: " + colorCode + ";");
 
-        VBox popupLayout = new VBox(10, messageLabel, closeButton);
-        popupLayout.setPadding(new Insets(20));
-        popupLayout.setStyle("-fx-background-color: #FFFFFF;"); // White background for popup
-
-        Scene popupScene = new Scene(popupLayout, 400, 300);
-        popupStage.setScene(popupScene);
-        popupStage.show();
-        */
 	}
 	
 	private BorderPane createBaseLayout() {
@@ -124,7 +140,7 @@ public class Main extends Application {
         //VBox settingsLayout = new VBox(settingsButton);
         //settingsLayout.setAlignment(Pos.TOP_RIGHT);
         
-		Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
+		Label welcomeLabel = new Label("Welcome to Unscrabble! Ready to play?");
 		Button readyButton = new Button("Ready");
 		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
 		readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
