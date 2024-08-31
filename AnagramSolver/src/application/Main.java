@@ -52,7 +52,7 @@ public class Main extends Application {
 		
 	    Button settingsButton = new Button();
 	    settingsButton.setGraphic(settingsImageView);
-	    pushButton(settingsButton);
+	    pushSettingsButton(settingsButton);
 	    
 	    // Add any additional settings button configuration here
 	    //settingsButton.setOnAction(event -> openPopup());
@@ -338,7 +338,7 @@ public class Main extends Application {
         
         return scene;
     }
-    public void pushButton(Button button) {
+    public void pushSettingsButton(Button button) {
     	button.setStyle("-fx-background-color: transparent; -fx-border-color:transparent;");
     	button.setOnMousePressed(event -> {
     		ImageView imageView = (ImageView) button.getGraphic();
