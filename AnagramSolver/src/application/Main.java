@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.Slider;
 
  
 
@@ -51,11 +52,29 @@ public class Main extends Application {
 	}
 	
 	private void openPopup() {
-		Stage popupStage = new Stage();
-		popupStage.setTitle("Popup Window");
+		Stage settingsStage = new Stage();
+		settingsStage.setTitle("Settings");
 		//prevents interaction with other windows until pop up is closed
 		//popupStage.initModality(Modality.APPLICATION_MODAL);
 		//
+		
+		Label volumeLabel = new Label("Volume:");
+		Slider volumeSlider = new Slider(0, 100, mediaPlayer.getVolume() * 100);
+		volumeSlider.setShowTickLabels(true);
+		volumeSlider.setShowTickMarks(true);
+		volumeSlider.setMajorTickUnit(50);
+		//volumeSlider.setBlockIncrement(5);
+		
+		volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+			mediaPlayer.setVolume(newVal.doubleValue() / 100.0);
+		});
+		
+		VBox settingsLayout = new VBox(10, volumeLabel, volumeSlider);
+		settingsLayout.setPadding(new Insets(20));
+		Scene settingsScene = new Scene(settingsLayout, 400, 300);
+		settingsStage.setScene(settingsScene);
+		settingsStage.show();
+		/*
 		Label messageLabel = new Label("This is a popup window!");
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> popupStage.close());
@@ -67,6 +86,7 @@ public class Main extends Application {
         Scene popupScene = new Scene(popupLayout, 400, 300);
         popupStage.setScene(popupScene);
         popupStage.show();
+        */
 	}
 	
 	private BorderPane createBaseLayout() {
