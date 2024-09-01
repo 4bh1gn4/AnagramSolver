@@ -1,0 +1,35 @@
+.root {
+    -fx-background-color: #FFFFFF; /* default white bg */
+}
+
+.bg-skyBlue {
+	-fx-background-color: #87CEEB;
+}
+
+.bg-paleGreen {
+	-fx-background-color: #98FB98;
+}
+
+.bg-lavender {
+	-fx-background-color: #E6E6FA;
+}
+
+.bg-lightPink {
+	-fx-background-color: #FFB6C1;
+}
+
+.bg-lightCoral {
+    -fx-background-color: #F08080;
+}
+
+.bg-lightYellow {
+    -fx-background-color: #FAFAD2;
+}
+
+.bg-lightSeaGreen {
+    -fx-background-color: #20B2AA;
+}
+
+.bg-mistyRose {
+    -fx-background-color: #FFE4E1;
+}

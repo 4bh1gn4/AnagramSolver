@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
@@ -12,8 +14,11 @@ import javafx.geometry.Insets;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.Slider;
 
  
 
@@ -25,19 +30,108 @@ public class Main extends Application {
 	private int level;
 	private int wrong;
 	private int hintNum;
+	private Button settingsButton;
+	private static final String BG_COLOR = "#FFC0CB";
+	private String selectedBackgroundColorClass = "root";
 	
 	
 @Override
 	public void start(Stage primaryStage) {
-		primaryStage.setTitle("Anagram Solver");
-		
+		primaryStage.setTitle("Unscrabble");
+		settingsButton = createSettingsButton();
 		Scene welcomeScene = welcomeScene(primaryStage);
+	    welcomeScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
 		//Scene gameScene = gameScene(primaryStage);
-		
 		primaryStage.setScene(welcomeScene);
 		primaryStage.show();
 	}
 	
+	private Button createSettingsButton() {
+		Image settingsIcon = new Image(getClass().getResourceAsStream("/application/settings.png"));
+		ImageView settingsImageView = createImageView(settingsIcon, 30);
+		
+	    Button settingsButton = new Button();
+	    settingsButton.setGraphic(settingsImageView);
+	    pushSettingsButton(settingsButton);
+	    
+	    // Add any additional settings button configuration here
+	    //settingsButton.setOnAction(event -> openPopup());
+	    return settingsButton;
+	}
+	
+	private void openPopup() {
+		Stage settingsStage = new Stage();
+		settingsStage.setTitle("Settings");
+		//prevents interaction with other windows until pop up is closed
+		//popupStage.initModality(Modality.APPLICATION_MODAL);
+		//
+		
+		Label volumeLabel = new Label("Music Volume:");
+		Slider volumeSlider = new Slider(0, 100, mediaPlayer.getVolume() * 100);
+		volumeSlider.setShowTickLabels(true);
+		volumeSlider.setShowTickMarks(true);
+		volumeSlider.setMajorTickUnit(50);
+		//volumeSlider.setBlockIncrement(5);
+		
+		volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+			mediaPlayer.setVolume(newVal.doubleValue() / 100.0);
+		});
+		
+		Label colorsLabel = new Label("Background colors:");
+		Button skyBlue = createBackgroundColorButton("#87CEEB", "bg-skyBlue");
+		Button paleGreen = createBackgroundColorButton("#98FB98", "bg-paleGreen");
+		Button lavender = createBackgroundColorButton("#E6E6FA", "bg-lavender");
+		Button lightPink = createBackgroundColorButton("#FFB6C1", "bg-lightPink");
+		Button lightCoral = createBackgroundColorButton("#F08080", "bg-lightCoral");
+		Button lightYellow = createBackgroundColorButton("#FAFAD2", "bg-lightYellow");
+		Button lightSeaGreen = createBackgroundColorButton("#20B2AA", "bg-lightSeaGreen");
+		Button mistyRose = createBackgroundColorButton("#FFE4E1", "bg-mistyRose");
+		HBox colorsList = new HBox(10, skyBlue, paleGreen, lavender, lightPink, lightCoral, lightYellow, lightSeaGreen, mistyRose);
+		
+		
+		VBox settingsLayout = new VBox(10, volumeLabel, volumeSlider, colorsLabel, colorsList);
+		settingsLayout.setPadding(new Insets(20));
+		Scene settingsScene = new Scene(settingsLayout, 400, 300);
+		settingsStage.setScene(settingsScene);
+		applyBackgroundColor(settingsStage.getScene());
+		settingsStage.show();
+		
+	}
+	
+	public void changeBackgroundColor(String colorClass) {
+	    selectedBackgroundColorClass = colorClass; // Store the selected color class
+	    applyBackgroundColor(settingsButton.getScene()); // Apply to the current scene
+	}
+	
+	public Button createBackgroundColorButton(String colorCode, String className) {
+		Button colorButton = new Button();
+		colorButton.setStyle("-fx-background-color: " + colorCode + ";");
+		colorButton.setOnAction(event -> changeBackgroundColor(className));
+		colorButton.setMinWidth(30);
+		colorButton.setMinHeight(20);
+		return colorButton;
+	}
+	
+	public void applyBackgroundColor(Scene scene) {
+		//Scene scene = settingsButton.getScene();
+		scene.getRoot().getStyleClass().removeAll("bg-skyBlue", "bg-paleGreen", "bg-lavender", "bg-lightPink", "bg-lightCoral", "bg-lightYellow", "bg-lightSeaGreen", "bg-mistyRose");
+		scene.getRoot().getStyleClass().add(selectedBackgroundColorClass);
+	}
+	
+	private BorderPane createBaseLayout() {
+	    BorderPane rootLayout = new BorderPane();
+	    
+	    // Create and configure top layout with settings button
+	    BorderPane topLayout = new BorderPane();
+	    topLayout.setRight(settingsButton);
+	    BorderPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
+	    topLayout.setPadding(new Insets(10, 10, 0, 0));
+	    rootLayout.getStyleClass().add("root");
+	    rootLayout.setTop(topLayout);
+	    return rootLayout;
+	}
+
 	public Scene welcomeScene(Stage primaryStage) {
 		Media bgMusic = new Media(new File("src/application/background music.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(bgMusic);
@@ -48,17 +142,30 @@ public class Main extends Application {
         	mediaPlayer.play();
         });
         
-		Label welcomeLabel = new Label("Welcome to Anagram Solver! Ready to play?");
+        //Button settingsButton = new Button("Settings");
+        //VBox settingsLayout = new VBox(settingsButton);
+        //settingsLayout.setAlignment(Pos.TOP_RIGHT);
+        
+		Label welcomeLabel = new Label("Welcome to Unscrabble! Ready to play?");
 		Button readyButton = new Button("Ready");
 		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
-		readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
+		readyButton.setOnAction(event -> {
+			Scene nextScene = levelScene(primaryStage);
+		    applyBackgroundColor(nextScene); // Apply color to the new scene
+		    primaryStage.setScene(nextScene);
+		});
 		
 		VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
 		welcomeLayout.setAlignment(Pos.CENTER);
-		welcomeLayout.setStyle("-fx-background-color: beige;");
+		//welcomeLayout.setStyle("-fx-background-color: " + BG_COLOR + ";");
 		
-		return new Scene(welcomeLayout, 600, 500);
-		
+		BorderPane rootLayout = createBaseLayout();
+	    rootLayout.setCenter(welcomeLayout);
+	    
+	    Scene scene = new Scene(rootLayout, 600, 500);
+	    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
+	    applyBackgroundColor(scene);
+	    return scene;
 	}
 	public Scene levelScene(Stage primaryStage) {
 		Button levelOne = new Button("Level 1 (3 letters)");
@@ -68,7 +175,7 @@ public class Main extends Application {
 		
 		HBox levelLayout = new HBox(10, levelOne, levelTwo, levelThree, levelFour);
 		levelLayout.setAlignment(Pos.CENTER);
-		levelLayout.setStyle("-fx-background-color: pink;");
+		//levelLayout.setStyle("-fx-background-color: " + BG_COLOR + ";");
 		
 		levelOne.setOnAction(event -> {
 			//System.out.println("Level 1 button clicked");
@@ -91,7 +198,13 @@ public class Main extends Application {
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
-		return new Scene(levelLayout, 600, 500);
+		BorderPane rootLayout = createBaseLayout();
+	    rootLayout.setCenter(levelLayout);
+	    
+	    Scene scene = new Scene(rootLayout, 600, 500);
+	    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
+	    applyBackgroundColor(scene);
+	    return scene;
 	}
 	
 	public Scene gameScene(Stage primaryStage) {
@@ -238,9 +351,42 @@ public class Main extends Application {
 
         rootLayout.setBottom(bottomLayout);
 
-        return new Scene(rootLayout, 600, 500);
+        // Add the settings button to the top of the root layout
+        BorderPane topLayout = new BorderPane();
+        topLayout.setRight(settingsButton);
+        BorderPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
+        topLayout.setPadding(new Insets(10, 10, 0, 0));
+
+        rootLayout.setTop(topLayout);
+
+        Scene scene = new Scene(rootLayout, 600, 500);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
+        applyBackgroundColor(scene);
+        return scene;
     }
-    
+    public void pushSettingsButton(Button button) {
+    	button.setStyle("-fx-background-color: transparent; -fx-border-color:transparent;");
+    	button.setOnMousePressed(event -> {
+    		ImageView imageView = (ImageView) button.getGraphic();
+    		imageView.setScaleX(0.9);
+    		imageView.setScaleY(0.9);
+    	});
+    	
+    	button.setOnMouseReleased(event -> {
+    		ImageView imageView = (ImageView) button.getGraphic();
+    		imageView.setScaleX(1.0);
+    		imageView.setScaleY(1.0);
+    		openPopup();
+    	});
+    }
+	public ImageView createImageView(Image image, int length) {
+		ImageView imageView = new ImageView(image);
+		imageView.setFitWidth(length);
+		imageView.setFitHeight(length);
+		imageView.setPreserveRatio(true);
+		
+		return imageView;
+	}
 	public String incorrectResponse(int wrongNumber) {
 		//wrongNumber++;
 		String[] array = {"Incorrect", "Nope", "Wrong again", "No, sorry", "Try again",
