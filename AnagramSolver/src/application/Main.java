@@ -180,21 +180,25 @@ public class Main extends Application {
 		levelOne.setOnAction(event -> {
 			//System.out.println("Level 1 button clicked");
 			level = 1;
+			AnagramUtils.shuffleWords(level);
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
 		levelTwo.setOnAction(event -> {
 			level = 2;
+			AnagramUtils.shuffleWords(level);
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
 		levelThree.setOnAction(event -> {
 			level = 3;
+			AnagramUtils.shuffleWords(level);
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		
 		levelFour.setOnAction(event -> {
 			level = 4;
+			AnagramUtils.shuffleWords(level);
 			primaryStage.setScene(gameScene(primaryStage));
 		});
 		

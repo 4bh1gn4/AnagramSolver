@@ -45,6 +45,17 @@ public class AnagramUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void shuffleWords(int level) {
+        switch (level) {
+            case 1: Collections.shuffle(threeLetterWords); break;
+            case 2: Collections.shuffle(fourLetterWords); break;
+            case 3: Collections.shuffle(fiveLetterWords); break;
+            case 4: Collections.shuffle(sixLetterWords); break;
+            default: throw new IllegalArgumentException("Invalid level: " + level);
+        }
+    }
+
 	public static String getWord(int index, int level) {
 		switch (level) {
 		case 1: return threeLetterWords.get(index);
