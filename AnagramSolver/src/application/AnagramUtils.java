@@ -64,13 +64,7 @@ public class AnagramUtils {
         default: throw new IllegalArgumentException("Invalid level: " + level);
 		}
 	}
-	/*
-	public static String getRandomWord(int index) {
-		
-		//Collections.shuffle(words); //this way, i do not need to access a word from a random array index
-		//return words.get(index);
-	}
-	*/
+	
 	public static String jumbleWord(String word) {
 		List<Character> letters = new ArrayList<Character>();
 		for (char c : word.toCharArray()) {
