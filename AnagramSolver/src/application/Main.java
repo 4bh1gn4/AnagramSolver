@@ -32,6 +32,7 @@ public class Main extends Application {
 	private int hintNum;
 	private Button settingsButton;
 	private static final String BG_COLOR = "#FFC0CB";
+	private String selectedBackgroundColorClass = "root";
 	
 	
 @Override
@@ -93,8 +94,14 @@ public class Main extends Application {
 		settingsLayout.setPadding(new Insets(20));
 		Scene settingsScene = new Scene(settingsLayout, 400, 300);
 		settingsStage.setScene(settingsScene);
+		applyBackgroundColor(settingsStage.getScene());
 		settingsStage.show();
 		
+	}
+	
+	public void changeBackgroundColor(String colorClass) {
+	    selectedBackgroundColorClass = colorClass; // Store the selected color class
+	    applyBackgroundColor(settingsButton.getScene()); // Apply to the current scene
 	}
 	
 	public Button createBackgroundColorButton(String colorCode, String className) {
@@ -106,11 +113,10 @@ public class Main extends Application {
 		return colorButton;
 	}
 	
-	public void changeBackgroundColor(String colorCode) {
-		Scene scene = settingsButton.getScene();
-		BorderPane root = (BorderPane) scene.getRoot();
-	    root.setStyle("-fx-background-color: " + colorCode + ";");
-
+	public void applyBackgroundColor(Scene scene) {
+		//Scene scene = settingsButton.getScene();
+		scene.getRoot().getStyleClass().removeAll("bg-skyBlue", "bg-paleGreen", "bg-lavender", "bg-lightPink", "bg-lightCoral", "bg-lightYellow", "bg-lightSeaGreen", "bg-mistyRose");
+		scene.getRoot().getStyleClass().add(selectedBackgroundColorClass);
 	}
 	
 	private BorderPane createBaseLayout() {
@@ -143,7 +149,11 @@ public class Main extends Application {
 		Label welcomeLabel = new Label("Welcome to Unscrabble! Ready to play?");
 		Button readyButton = new Button("Ready");
 		//readyButton.setOnAction(event -> primaryStage.setScene(gameScene(primaryStage)));
-		readyButton.setOnAction(event -> primaryStage.setScene(levelScene(primaryStage)));
+		readyButton.setOnAction(event -> {
+			Scene nextScene = levelScene(primaryStage);
+		    applyBackgroundColor(nextScene); // Apply color to the new scene
+		    primaryStage.setScene(nextScene);
+		});
 		
 		VBox welcomeLayout = new VBox(10, welcomeLabel, readyButton);
 		welcomeLayout.setAlignment(Pos.CENTER);
@@ -154,7 +164,7 @@ public class Main extends Application {
 	    
 	    Scene scene = new Scene(rootLayout, 600, 500);
 	    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
-	    
+	    applyBackgroundColor(scene);
 	    return scene;
 	}
 	public Scene levelScene(Stage primaryStage) {
@@ -193,7 +203,7 @@ public class Main extends Application {
 	    
 	    Scene scene = new Scene(rootLayout, 600, 500);
 	    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
-	    
+	    applyBackgroundColor(scene);
 	    return scene;
 	}
 	
@@ -351,7 +361,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(rootLayout, 600, 500);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm()); // Add the CSS file
-        
+        applyBackgroundColor(scene);
         return scene;
     }
     public void pushSettingsButton(Button button) {
