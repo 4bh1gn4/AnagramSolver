@@ -10,11 +10,11 @@ A desktop app that finds **all anagrams** of a given word using a local word lis
 
 ## 🚀 Features
 
-- ⌨️ **Instant search**: type a word and see matching anagrams  
-- 📁 **File-based dictionary** loading (fast local lookup)  
-- 🧼 **Input normalization** (case-insensitive; trims spaces)  
-- ⚠️ **Real-time error handling** (missing file, bad input)  
-- ⚡ **Efficient generation** (character-frequency logic)  
+- ⌨️ **Instant search**: type a word and see matching anagrams
+- 📁 **File-based dictionary** loading (fast local lookup)
+- 🧼 **Input normalization** (case-insensitive; trims spaces)
+- ⚠️ **Real-time error handling** (missing file, bad input)
+- ⚡ **Efficient generation** (character-frequency logic)
 
 ---
 
@@ -26,36 +26,40 @@ A desktop app that finds **all anagrams** of a given word using a local word lis
 | UI        | JavaFX (controls/FXML)  |
 | Tools     | Eclipse, GitHub         |
 
-*(Repo notes: Java/JavaFX project with CSS styling; built for JDK 21.)*
-
 ---
 
-## 🛠️ Setup Instructions (Local)
+## 🛠️ Setup Instructions (Local Hosting)
 
 ### 📦 1. Clone the Repository
 
 ```bash
 git clone https://github.com/4bh1gn4/AnagramSolver.git
 cd AnagramSolver
-🧰 2. Install Requirements
-text
-Copy
-Edit
+```
+
+---
+
+### 🧪 2. Install Requirements
+
 - JDK 21 (required)
 - JavaFX SDK (matching your JDK version)
 - Optional: Eclipse (project was built in Eclipse)
-▶️ 3. Run (Command Line)
+
+---
+
+### ▶️ 3. Run (Command Line)
 If you run without a build tool, provide the JavaFX module path:
 
-bash
-Copy
-Edit
+```bash
 # Example paths — update to your JavaFX SDK location
 javac --module-path "/path/to/javafx/lib" --add-modules javafx.controls,javafx.fxml -d out $(find AnagramSolver -name "*.java")
 java --module-path "/path/to/javafx/lib" --add-modules javafx.controls,javafx.fxml -cp out your.package.Main
+```
 Replace your.package.Main with the actual main class.
 
-🧩 4. Run (Eclipse)
+---
+
+### 🧩 4. Run (Eclipse)
 File → Import → Existing Projects into Workspace
 
 Select the AnagramSolver/ folder.
@@ -64,44 +68,49 @@ Add JavaFX to your Run Configuration:
 
 VM arguments:
 
-bash
-Copy
-Edit
+```bash
 --module-path "PATH_TO_FX/lib" --add-modules javafx.controls,javafx.fxml
+```
 Run the main class (likely Main / App depending on your package).
 
-⚙️ Configuration
-Word list file: app reads a local dictionary via file I/O.
-Common locations: resources/words.txt or a path set in code.
+---
 
-Encoding: UTF-8 recommended for dictionary files.
+## 📁 Repository Structure
 
-📁 Repository Structure
-bash
-Copy
-Edit
+```
 AnagramSolver/
 ├── AnagramSolver/                 # Eclipse project
 │   ├── src/                       # Java source (JavaFX app)
 │   ├── resources/                 # (Optional) word list(s), CSS
 │   └── ...                        # Eclipse project files (.project, .classpath)
 └── README.md
-🧠 Key Files
-File/Folder	Purpose
-src/	Java source (controllers, UI, logic)
-resources/	Word list(s) and optional CSS
-README.md	This documentation
+```
 
-🔐 How It Works (Brief)
-Normalize input (lowercase, remove spaces).
+## 🧠 Key Files
 
-Compute signature (e.g., sorted chars or frequency map).
+| File                     | Purpose                                                           |
+|--------------------------|-------------------------------------------------------------------|
+| `Main.java`               | JavaFX application entry point; manages scenes, game flow, and UI|
+| `AnagramUtils.java`       | Core game logic: word loading, jumbling, checking correctness    |
+| `three-letters.txt`       | Word list for Level 1 (3-letter words)                           |
+| `four-letters.txt`        | Word list for Level 2 (4-letter words)                           |
+| `five-letters.txt`        | Word list for Level 3 (5-letter words)                           |
+| `six-letters.txt`         | Word list for Level 4 (6-letter words)                           |
+| `styles.css`              | JavaFX stylesheet for customizing UI appearance                 |
+| `settings.png`            | Icon for the settings button                                     |
+| `background music.mp3`    | Background music for the game                                    |
 
-Stream dictionary and match words sharing the same signature.
+---
 
-Display matches in the JavaFX UI (with basic validation/errors).
+### 🔐 Configuration
+Word list file: app reads a local dictionary via file I/O.
+Common locations: resources/words.txt or a path set in code.
 
-🌩️ Future Improvements
+Encoding: UTF-8 recommended for dictionary files.
+
+---
+
+### 🌩️ Future Improvements
 📦 Configurable dictionary path (file chooser, recent files)
 
 🔎 Live filtering and performance metrics on large lists
@@ -110,8 +119,10 @@ Display matches in the JavaFX UI (with basic validation/errors).
 
 🎨 CSS polish + dark mode
 
-🙌 Credits
+---
+
+## 🙌 Credits
 Created by @4bh1gn4
 
-📜 License
+## 📜 License
 MIT License
