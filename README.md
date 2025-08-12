@@ -77,7 +77,7 @@ Run the main class (likely Main / App depending on your package).
 
 ---
 
-## 📁 Repository Structure
+### 📁 Repository Structure
 
 ```
 AnagramSolver/
@@ -88,7 +88,7 @@ AnagramSolver/
 └── README.md
 ```
 
-## 🧠 Key Files
+### 🧠 Key Files
 
 | File                     | Purpose                                                           |
 |--------------------------|-------------------------------------------------------------------|
@@ -125,10 +125,10 @@ Encoding: UTF-8 recommended for dictionary files.
 
 ---
 
-## 🙌 Credits
+### 🙌 Credits
 
 Created by [@4bh1gn4](https://github.com/4bh1gn4)  
 
-## 📜 License
+### 📜 License
 
 MIT License
