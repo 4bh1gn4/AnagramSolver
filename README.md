@@ -48,6 +48,7 @@ cd AnagramSolver
 ---
 
 ### ▶️ 3. Run (Command Line)
+
 If you run without a build tool, provide the JavaFX module path:
 
 ```bash
@@ -60,6 +61,7 @@ Replace your.package.Main with the actual main class.
 ---
 
 ### 🧩 4. Run (Eclipse)
+
 File → Import → Existing Projects into Workspace
 
 Select the AnagramSolver/ folder.
@@ -103,6 +105,7 @@ AnagramSolver/
 ---
 
 ### 🔐 Configuration
+
 Word list file: app reads a local dictionary via file I/O.
 Common locations: resources/words.txt or a path set in code.
 
@@ -111,6 +114,7 @@ Encoding: UTF-8 recommended for dictionary files.
 ---
 
 ### 🌩️ Future Improvements
+
 📦 Configurable dictionary path (file chooser, recent files)
 
 🔎 Live filtering and performance metrics on large lists
@@ -122,7 +126,9 @@ Encoding: UTF-8 recommended for dictionary files.
 ---
 
 ## 🙌 Credits
-Created by @4bh1gn4
+
+Created by [@4bh1gn4](https://github.com/4bh1gn4)  
 
 ## 📜 License
+
 MIT License
