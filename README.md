@@ -26,6 +26,8 @@ A desktop app that finds **all anagrams** of a given word using a local word lis
 | UI        | JavaFX (controls/FXML)  |
 | Tools     | Eclipse, GitHub         |
 
+*(Repo notes: Java/JavaFX project with CSS styling; built for JDK 21.)*
+
 ---
 
 ## 🛠️ Setup Instructions (Local)
@@ -36,12 +38,12 @@ A desktop app that finds **all anagrams** of a given word using a local word lis
 git clone https://github.com/4bh1gn4/AnagramSolver.git
 cd AnagramSolver
 🧰 2. Install Requirements
-JDK 21 (required)
-
-JavaFX SDK (matching your JDK version)
-
-Optional: Eclipse (project was built in Eclipse)
-
+text
+Copy
+Edit
+- JDK 21 (required)
+- JavaFX SDK (matching your JDK version)
+- Optional: Eclipse (project was built in Eclipse)
 ▶️ 3. Run (Command Line)
 If you run without a build tool, provide the JavaFX module path:
 
@@ -62,7 +64,7 @@ Add JavaFX to your Run Configuration:
 
 VM arguments:
 
-cpp
+bash
 Copy
 Edit
 --module-path "PATH_TO_FX/lib" --add-modules javafx.controls,javafx.fxml
