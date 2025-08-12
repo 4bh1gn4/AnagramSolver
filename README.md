@@ -73,7 +73,7 @@ Run the main class (likely Main / App depending on your package).
 
 ---
 
-### 📁 Repository Structure
+## 📁 Repository Structure
 
 ```
 AnagramSolver/
@@ -84,7 +84,7 @@ AnagramSolver/
 └── README.md
 ```
 
-### 🧠 Key Files
+## 🧠 Key Files
 
 | File                     | Purpose                                                           |
 |--------------------------|-------------------------------------------------------------------|
@@ -100,7 +100,7 @@ AnagramSolver/
 
 ---
 
-### 🔐 Configuration
+## 🔐 Configuration
 
 Word list file: app reads a local dictionary via file I/O.
 Common locations: resources/words.txt or a path set in code.
@@ -109,7 +109,7 @@ Encoding: UTF-8 recommended for dictionary files.
 
 ---
 
-### 🌩️ Future Improvements
+## 🌩️ Future Improvements
 
 📦 Configurable dictionary path (file chooser, recent files)
 
@@ -121,10 +121,10 @@ Encoding: UTF-8 recommended for dictionary files.
 
 ---
 
-### 🙌 Credits
+## 🙌 Credits
 
 Created by [@4bh1gn4](https://github.com/4bh1gn4)  
 
-### 📜 License
+## 📜 License
 
 MIT License
