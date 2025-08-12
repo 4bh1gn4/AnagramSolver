@@ -1,7 +1,3 @@
-# AnagramSolver
-Technologies: Java, JavaFX, CSS, JSON, GitHub, Eclipse
-Description: Developed a JavaFX application that allows users to find anagrams for a given word by fetching word lists through file reading. The user-friendly interface enables easy input and dynamic result display. Key features include efficient anagram generation logic, real-time error handling, and compatibility with JDK 21, demonstrating skills in Java development, file handling, and API integration.
-
 # 🔠 Anagram Solver
 
 A desktop app that finds **all anagrams** of a given word using a local word list. Built with **Java + JavaFX**, it features a simple UI for input and dynamically displays results as you type. Compatible with **JDK 21** and developed in **Eclipse**.
